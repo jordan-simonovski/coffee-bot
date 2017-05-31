@@ -24,12 +24,11 @@ coffeeGifs = [
         ]
 
 questions = [
-        "It's that time of the day for a some coffee from {0}",
+        "It's that time of the day for some coffee from {0}",
         "Coffee? I hear {0} does great coffee.",
         "Who wants some caffeinated goodness from {0}",
         "{0}. You guys in?",
         "Coffee comrades! Time for some coffee from {0}",
-        "Nothing like having some warm, creamy coffee slide down your throat at {0}",
         "COFFEE, COFFEE, COFFEE, COFFEE, COFFEE, COFFEE! Let's go to {0}",
         "Guise. Time. For. Coffee. \n {0}?",
         "Oh would you look at the time? It looks like it's time for some coffee from {0}"
@@ -38,11 +37,18 @@ questions = [
 def checkDay():
     today = datetime.now(pytz.utc)
     localisedToday = today.astimezone(tz)
-    print(localisedToday)
+    return localisedToday.strftime("%A")
 
 def askQuestion():
-        checkDay()
-        coffeeGif = random.choice(coffeeGifs)
+    coffeeGif = random.choice(coffeeGifs)
+    day = checkDay()
+    if day in dayActions:
+        slackConnector.sendMessage(dayActions[day], coffeeGif)
+    else:
         cafe = random.choice(coffeePlaces)
 	question = random.choice(questions)
 	slackConnector.sendMessage(question.format(cafe), coffeeGif)
+
+dayActions = {
+        "Tuesday": "Cheap Tuesdays at Antidote. Go go go!"
+}
