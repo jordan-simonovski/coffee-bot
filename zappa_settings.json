@@ -1,0 +1,17 @@
+{
+    "internal": {
+        "app_function": "run.app", 
+        "aws_region": "ap-southeast-2", 
+        "profile_name": "personal", 
+        "s3_bucket": "zappa-coffee-bot-internal",
+        "environment_variables": {
+            "slack_webhook": "https://hooks.slack.com/services/<blablabla>" 
+        },
+        "events": [
+            {
+               "function": "run.gimmeCoffee", 
+               "expression": "cron(00 23 ? * MON-FRI *)" 
+            }
+        ]
+    }
+}
